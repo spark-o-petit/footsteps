@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
               NavigationLink(destination: Text("Goal1")) {
                 Text("Goal1")
@@ -20,6 +20,14 @@ struct ContentView: View {
               NavigationLink(destination: Text("Goal3")) {
                 Text("Goal3")
               }
+            }
+            .navigationTitle(Text("FOOTSEPS"))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {}) {
+                        Image(systemName: "plus")
+                    }
+                }
             }
           }
     }
