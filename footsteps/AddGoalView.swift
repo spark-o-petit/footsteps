@@ -8,6 +8,17 @@
 import SwiftUI
 
 struct AddGoalView: View {
+    
+    @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
+    
+    @State private var title = ""
+    @State private var estimatedEfforts = ""
+    @State private var category = Category.tech
+    @State private var difficulty = Difficulty.easy
+    @State private var dueDate = Date()
+    
+    
     var body: some View {
         
         Form {
@@ -17,7 +28,7 @@ struct AddGoalView: View {
                         Image(systemName: "star.fill")
                         Text("Title")
                         Spacer()
-                        TextField("Enter Goal", text: .constant(""))
+                        TextField("Goal", text: $title)
                     }
                 }
             } header: {
@@ -31,7 +42,7 @@ struct AddGoalView: View {
                     HStack {
                         Image(systemName: "figure.walk")
                         Text("Efforts")
-                        TextField("Estimated Efforts", text: .constant(""))
+                        TextField("Efforts", text: $estimatedEfforts)
                     }
                 }
             } header: {
@@ -44,11 +55,11 @@ struct AddGoalView: View {
                 List {
                     HStack {
                         Image(systemName: "square.grid.2x2")
-                        Picker("Category", selection: .constant("")) {
-                            Label("TECH", systemImage: "swift").tag("")
-                            Label("DESIGN", systemImage: "pencil.and.outline").tag("")
-                            Label("BUSINESS", systemImage: "chart.pie.fill").tag("")
-                    }
+                        Picker("Category", selection: $category) {
+                            ForEach(Category.allCases, id: \.self) {
+                                Text($0.rawValue)
+                            }
+                        }
                         
                      }
                 }
@@ -62,10 +73,10 @@ struct AddGoalView: View {
                 List {
                     HStack {
                         Image(systemName: "gauge.with.needle.fill")
-                        Picker("Difficulty", selection: .constant("")) {
-                            Text("EASY").tag("")
-                            Text("MEDIUM").tag("")
-                            Text("HARD").tag("")
+                        Picker("Difficulty", selection: $difficulty) {
+                            ForEach(Difficulty.allCases, id: \.self) {
+                                Text($0.rawValue)
+                            }
                         }
                      }
                 }
@@ -79,8 +90,7 @@ struct AddGoalView: View {
                 List {
                     HStack {
                         Image(systemName: "calendar")
-                        Text("Due Date")
-                        DatePicker("", selection: .constant(Date()), displayedComponents: [.date])
+                        DatePicker("Due Date", selection: $dueDate, displayedComponents: [.date])
                      }
                 }
             } header: {
@@ -90,12 +100,18 @@ struct AddGoalView: View {
             }
             
         }
-        
-        .navigationBarTitle("Add Goal", displayMode: .inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Done") {
-                    print("Done tapped")
+                    let newGoal = Goal(
+                        title: title,
+                        estimatedEfforts: estimatedEfforts,
+                        category: category,
+                        difficulty: difficulty,
+                        dueDate: dueDate
+                    )
+                    context.insert(newGoal)
+                    dismiss()
                 }
             }
         }
