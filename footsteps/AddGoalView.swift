@@ -80,7 +80,7 @@ struct AddGoalView: View {
                     HStack {
                         Image(systemName: "calendar")
                         Text("Due Date")
-                        DatePicker("", selection: .constant(Date()))
+                        DatePicker("", selection: .constant(Date()), displayedComponents: [.date])
                      }
                 }
             } header: {
@@ -89,9 +89,16 @@ struct AddGoalView: View {
             Text("Choose a category that aligns with your priorities and long-term objectives")
             }
             
-            
         }
-
+        
+        .navigationBarTitle("Add Goal", displayMode: .inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Done") {
+                    print("Done tapped")
+                }
+            }
+        }
     }
 }
 
