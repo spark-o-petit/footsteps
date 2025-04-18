@@ -80,7 +80,7 @@ struct AddGoalView: View {
                     HStack {
                         Image(systemName: "calendar")
                         Text("Due Date")
-                        DatePicker("", selection: .constant(Date()))
+                        DatePicker("", selection: .constant(Date()), displayedComponents: [.date])
                      }
                 }
             } header: {
