@@ -98,6 +98,17 @@ struct ContentView: View {
     }
 }
 
+//#Preview {
+//    ContentView()
+//}
+
 #Preview {
-    ContentView()
+    do {
+        let container = try ModelContainer(for: Goal.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let context = container.mainContext
+        context.insert(Goal(title: "Preview Goal", estimatedEfforts: "5 hours", category: .tech, difficulty: .easy, dueDate: Date()))
+        return ContentView().modelContainer(container)
+    } catch {
+        return Text("Preview Error")
+    }
 }
