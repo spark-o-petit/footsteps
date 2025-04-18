@@ -89,9 +89,16 @@ struct AddGoalView: View {
             Text("Choose a category that aligns with your priorities and long-term objectives")
             }
             
-            
         }
-
+        
+        .navigationBarTitle("Add Goal", displayMode: .inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Done") {
+                    print("Done tapped")
+                }
+            }
+        }
     }
 }
 
