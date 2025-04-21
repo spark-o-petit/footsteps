@@ -132,9 +132,9 @@ struct ContentView: View {
             let context = container.mainContext
             
             let dummyGoals = [
-                Goal(title: "Learn SwiftUI", estimatedEfforts: "10 hours", category: .tech, difficulty: .medium, dueDate: .now.addingTimeInterval(86400 * 7)),
-                Goal(title: "Design App UI", estimatedEfforts: "6 hours", category: .design, difficulty: .easy, dueDate: .now.addingTimeInterval(86400 * 5)),
-                Goal(title: "Build Pitch Deck", estimatedEfforts: "3 hours", category: .business, difficulty: .hard, dueDate: .now.addingTimeInterval(86400 * 10))
+                Goal(title: "Learn SwiftUI", estimatedEfforts: 10, category: .tech, difficulty: .medium, dueDate: .now.addingTimeInterval(86400 * 7)),
+                Goal(title: "Design App UI", estimatedEfforts: 6, category: .design, difficulty: .easy, dueDate: .now.addingTimeInterval(86400 * 5)),
+                Goal(title: "Build Pitch Deck", estimatedEfforts: 3, category: .business, difficulty: .hard, dueDate: .now.addingTimeInterval(86400 * 10))
             ]
             
             dummyGoals.forEach { context.insert($0) }
@@ -144,3 +144,4 @@ struct ContentView: View {
             return Text("Preview Error")
         }
     }
+
