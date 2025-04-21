@@ -11,12 +11,12 @@ import SwiftData
 @Model
 class Goal {
     var title: String
-    var estimatedEfforts: String
+    var estimatedEfforts: Int
     var category: Category
     var difficulty: Difficulty
     var dueDate: Date
 
-    init(title: String, estimatedEfforts: String, category: Category, difficulty: Difficulty, dueDate: Date) {
+    init(title: String, estimatedEfforts: Int, category: Category, difficulty: Difficulty, dueDate: Date) {
         self.title = title
         self.estimatedEfforts = estimatedEfforts
         self.category = category
