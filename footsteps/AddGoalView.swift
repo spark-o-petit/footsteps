@@ -13,10 +13,16 @@ struct AddGoalView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var title = ""
-    @State private var estimatedEfforts = ""
+    @State private var estimatedEfforts: Int = 0
     @State private var category = Category.tech
     @State private var difficulty = Difficulty.easy
     @State private var dueDate = Date()
+    
+    private let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        return formatter
+    }()
     
     
     var body: some View {
@@ -43,7 +49,8 @@ struct AddGoalView: View {
                         HStack {
                             Image(systemName: "figure.walk")
                             Text("Efforts")
-                            TextField("Efforts", text: $estimatedEfforts)
+                            TextField("Efforts", value: $estimatedEfforts, formatter: numberFormatter)
+                                .keyboardType(.numberPad)
                         }
                     }
                 } header: {
