@@ -101,9 +101,18 @@ struct AddGoalView: View {
                 }
                 
             }
-            .navigationTitle(Text("Add Goal"))
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .principal) {
+                    Text("Add Goal")
+                        .font(.headline)
+                }
+                
+                ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel") {
+                            dismiss()
+                        }
+                    }
+                ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
                         let newGoal = Goal(
                             title: title,
