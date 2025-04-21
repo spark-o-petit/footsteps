@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct footstepsApp: App {
@@ -13,5 +14,6 @@ struct footstepsApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: Goal.self)
     }
 }
