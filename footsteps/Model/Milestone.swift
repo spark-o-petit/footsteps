@@ -11,13 +11,11 @@ import SwiftData
 @Model
 class Milestone {
     var title: String
-    var footsteps: String
     var createdAt: Date
     @Relationship var goal: Goal
     
-    init(title: String, footsteps: String, goal: Goal) {
+    init(title: String, goal: Goal) {
         self.title = title
-        self.footsteps = footsteps
         self.createdAt = Date()
         self.goal = goal
     }
