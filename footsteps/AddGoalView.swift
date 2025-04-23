@@ -30,81 +30,75 @@ struct AddGoalView: View {
         NavigationStack {
             Form {
                 Section {
-                    List {
-                        HStack {
-                            Image(systemName: "star.fill")
-                            Text("Title")
-                            Spacer()
-                            TextField("Goal", text: $title)
-                        }
+                    HStack {
+                        Image(systemName: "star.fill")
+                        Text("Title")
+                        Spacer()
+                        TextField("Goal", text: $title)
                     }
                 } header: {
                     Text("SPECIFIC")
                 } footer: {
-                Text("Keep your title concise and action-oriented")
+                    Text("Keep your title concise and action-oriented")
                 }
                 
                 Section {
-                    List {
-                        HStack {
-                            Image(systemName: "figure.walk")
-                            Text("Efforts")
-                            TextField("Efforts", value: $estimatedEfforts, formatter: numberFormatter)
-                                .keyboardType(.numberPad)
-                        }
+                    HStack {
+                        Image(systemName: "figure.walk")
+                        Text("Efforts")
+                        TextField("Efforts", value: $estimatedEfforts, formatter: numberFormatter)
+                            .keyboardType(.numberPad)
                     }
+                    
                 } header: {
                     Text("MEASURABLE")
                 } footer: {
-                Text("Estimate realistic efforts based on your available resources")
+                    Text("Estimate realistic efforts based on your available resources")
                 }
                 
                 Section {
-                    List {
-                        HStack {
-                            Image(systemName: "square.grid.2x2")
-                            Picker("Category", selection: $category) {
-                                ForEach(Category.allCases, id: \.self) {
-                                    Text($0.rawValue)
-                                }
+                    HStack {
+                        Image(systemName: "square.grid.2x2")
+                        Picker("Category", selection: $category) {
+                            ForEach(Category.allCases, id: \.self) {
+                                Text($0.rawValue)
                             }
-                            
-                         }
+                        }
+                        
                     }
+                    
                 } header: {
                     Text("RELEVANT")
                 } footer: {
-                Text("Choose a category that aligns with your priorities and long-term objectives")
+                    Text("Choose a category that aligns with your priorities and long-term objectives")
                 }
                 
                 Section {
-                    List {
-                        HStack {
-                            Image(systemName: "gauge.with.needle.fill")
-                            Picker("Difficulty", selection: $difficulty) {
-                                ForEach(Difficulty.allCases, id: \.self) {
-                                    Text($0.rawValue)
-                                }
+                    HStack {
+                        Image(systemName: "gauge.with.needle.fill")
+                        Picker("Difficulty", selection: $difficulty) {
+                            ForEach(Difficulty.allCases, id: \.self) {
+                                Text($0.rawValue)
                             }
-                         }
+                        }
                     }
+                    
                 } header: {
                     Text("ACHIEVABLE")
                 } footer: {
-                Text("Choose a category that aligns with your priorities and long-term objectives")
+                    Text("Choose a category that aligns with your priorities and long-term objectives")
                 }
                 
                 Section {
-                    List {
-                        HStack {
-                            Image(systemName: "calendar")
-                            DatePicker("Due Date", selection: $dueDate, displayedComponents: [.date])
-                         }
+                    HStack {
+                        Image(systemName: "calendar")
+                        DatePicker("Due Date", selection: $dueDate, displayedComponents: [.date])
                     }
+                    
                 } header: {
                     Text("ACHIEVABLE")
                 } footer: {
-                Text("Choose a category that aligns with your priorities and long-term objectives")
+                    Text("Choose a category that aligns with your priorities and long-term objectives")
                 }
                 
             }
