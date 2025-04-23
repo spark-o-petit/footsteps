@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct GoalDetailView: View {
     let goal: Goal
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
     @State private var showDeleteAlert = false
     
     var body: some View {
@@ -61,7 +63,7 @@ struct GoalDetailView: View {
         }
         .alert("Delete Goal", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
-                // TODO: Add deletion logic here
+                modelContext.delete(goal)
                 dismiss()
             }
             Button("Cancel", role: .cancel) {}
