@@ -10,13 +10,45 @@ import SwiftData
 
 struct ContentView: View {
     @Query var goals: [Goal]
+    
     @State private var showAddGoalView: Bool = false
+    
+    private func daysRemaining(until date: Date) -> Int {
+        let calendar = Calendar.current
+        let start = calendar.startOfDay(for: Date())
+        let end = calendar.startOfDay(for: date)
+        let components = calendar.dateComponents([.day], from: start, to: end)
+        return components.day ?? 0
+    }
+    
+    private func symbolForCategory(_ category: Category) -> String {
+        switch category {
+        case .tech:
+            return "swift"
+        case .design:
+            return "pencil.and.outline"
+        case .business:
+            return "chart.pie.fill"
+        }
+    }
     
     var body: some View {
         
         NavigationStack {
             List(goals) { goal in
-                Text(goal.title)
+                NavigationLink(destination: GoalDetailView(goal: goal)) {
+                    VStack (alignment: .leading) {
+                        HStack {
+                            Image(systemName: symbolForCategory(goal.category))
+                            Text(goal.title)
+                        }
+                        HStack {
+                            Text("\(goal.difficulty.rawValue), \(daysRemaining(until: goal.dueDate)) days left, \(goal.estimatedEfforts) steps estimated")
+                        }
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    }
+                }
             }
             .navigationTitle("FOOTSTEPS")
             .toolbar {
@@ -31,85 +63,6 @@ struct ContentView: View {
             .sheet(isPresented: $showAddGoalView) {
                 AddGoalView()
             }
-            
-            
-            //        NavigationStack {
-            //
-            //            List {
-            //                Section {
-            //                    NavigationLink(destination: Text("Simple App with SwiftUI")) {
-            //                            VStack (alignment: .leading) {
-            //                            Text("Simple App with SwiftUI")
-            //                                HStack {
-            //                                    Label("12 d", systemImage: "calendar")
-            //                                    Text("|")
-            //                                    Label("Normal", systemImage: "gauge.with.needle.fill")
-            //                                    Text("|")
-            //                                    Label("5/40", systemImage: "figure.walk")
-            //                                }
-            //                                .font(.subheadline)
-            //                                .foregroundColor(.accentColor)
-            //                        }
-            //                    }
-            //                } header: {
-            //                    HStack {
-            //                        Image(systemName: "swift")
-            //                        Text("TECH")
-            //                    }
-            //                }
-            //                Section {
-            //                    NavigationLink(destination: Text("Simple App with SwiftUI")) {
-            //                            VStack (alignment: .leading) {
-            //                            Text("Simple App with SwiftUI")
-            //                                HStack {
-            //                                    Label("12 d", systemImage: "calendar")
-            //                                    Text("|")
-            //                                    Label("Normal", systemImage: "gauge.with.needle.fill")
-            //                                    Text("|")
-            //                                    Label("5/40", systemImage: "figure.walk")
-            //                                }
-            //                                .font(.subheadline)
-            //                                .foregroundColor(.accentColor)
-            //                        }
-            //                    }
-            //                } header: {
-            //                    HStack {
-            //                        Image(systemName: "pencil.and.outline")
-            //                        Text("DESIGN")
-            //                    }
-            //                }
-            //                Section {
-            //                    NavigationLink(destination: Text("Simple App with SwiftUI")) {
-            //                            VStack (alignment: .leading) {
-            //                            Text("Simple App with SwiftUI")
-            //                                HStack {
-            //                                    Label("12 d", systemImage: "calendar")
-            //                                    Text("|")
-            //                                    Label("Normal", systemImage: "gauge.with.needle.fill")
-            //                                    Text("|")
-            //                                    Label("5/40", systemImage: "figure.walk")
-            //                                }
-            //                                .font(.subheadline)
-            //                                .foregroundColor(.accentColor)
-            //                        }
-            //                    }
-            //                } header: {
-            //                    HStack {
-            //                        Image(systemName: "chart.pie.fill")
-            //                        Text("BUSINESS")
-            //                    }
-            //                }
-            //
-            //              .navigationTitle("FOOTSTEPS")
-            //            }
-            //            .toolbar {
-            //                ToolbarItem(placement: .navigationBarTrailing) {
-            //                    Button(action: {}) {
-            //                        Image(systemName: "plus")
-            //                    }
-            //                }
-            //            }
-            //          }
         }
     }
 }
