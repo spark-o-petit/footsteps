@@ -60,6 +60,13 @@ struct GoalDetailView: View {
                     Image(systemName: "trash")
                 }
             }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    print("edit tapped")
+                }) {
+                    Image(systemName: "square.and.pencil")
+                }
+            }
         }
         .alert("Delete Goal", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
