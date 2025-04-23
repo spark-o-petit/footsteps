@@ -14,6 +14,7 @@ struct GoalDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var showDeleteAlert = false
+    @State private var isEditPresented = false
     
     var body: some View {
         Form {
@@ -60,6 +61,16 @@ struct GoalDetailView: View {
                     Image(systemName: "trash")
                 }
             }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    isEditPresented = true
+                }) {
+                    Image(systemName: "square.and.pencil")
+                }
+            }
+        }
+        .sheet(isPresented: $isEditPresented) {
+            EditGoalView(goal: goal)
         }
         .alert("Delete Goal", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
