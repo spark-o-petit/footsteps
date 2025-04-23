@@ -68,6 +68,13 @@ struct GoalDetailView: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            modelContext.delete(milestone)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
                 }
                 if isAddingMilestone {
                     HStack {
