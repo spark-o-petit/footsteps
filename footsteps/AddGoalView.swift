@@ -102,6 +102,8 @@ struct AddGoalView: View {
                 }
                 
             }
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Add Goal")
