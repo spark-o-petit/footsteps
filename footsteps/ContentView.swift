@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import Lottie
 
 struct ContentView: View {
     @Query var goals: [Goal]
@@ -35,22 +36,42 @@ struct ContentView: View {
     var body: some View {
         
         NavigationStack {
-            List(goals) { goal in
-                NavigationLink(destination: GoalDetailView(goal: goal)) {
-                    VStack (alignment: .leading) {
-                        HStack {
-                            Image(systemName: symbolForCategory(goal.category))
-                            Text(goal.title)
-                        }
-                        HStack {
-                            Text("\(goal.difficulty.rawValue), \(daysRemaining(until: goal.dueDate)) days left, \(goal.milestones.count) of \(goal.estimatedEfforts) steps (\(goal.milestones.count/goal.estimatedEfforts*100)%)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
+            
+            VStack(spacing: 0) {
+                VStack {
+                    LottieView(jsonName: "Steps")
+                        .frame(height: 240)
+                    Text("Track your progress, one step at a time—commit to your journey and leave your footprint!")
+                        .multilineTextAlignment(.center)
+                        .font(.callout)
+                        .foregroundColor(.primary)
+                }
+                .padding()
+                .background(Color(.systemGroupedBackground))
+                
+                // ✅ 리스트 본문
+                List {
+                    ForEach(goals) { goal in
+                        NavigationLink(destination: GoalDetailView(goal: goal)) {
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Image(systemName: symbolForCategory(goal.category))
+                                    Text(goal.title)
+                                }
+                                HStack {
+                                    Text("\(goal.difficulty.rawValue), \(daysRemaining(until: goal.dueDate)) days left, \(goal.milestones.count)/\(goal.estimatedEfforts) steps")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
                         }
                     }
                 }
+                .listStyle(.insetGrouped)
             }
             .navigationTitle("FOOTSTEPS")
+            .toolbarBackground(Color.white, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
