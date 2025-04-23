@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct GoalDetailView: View {
     let goal: Goal
 
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+    @State private var showDeleteAlert = false
+    
     var body: some View {
         Form {
             Section(header: Text("SUMMARY")) {
@@ -47,6 +52,24 @@ struct GoalDetailView: View {
 
         }
         .navigationTitle("Goal Details")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showDeleteAlert = true
+                }) {
+                    Image(systemName: "trash")
+                }
+            }
+        }
+        .alert("Delete Goal", isPresented: $showDeleteAlert) {
+            Button("Delete", role: .destructive) {
+                modelContext.delete(goal)
+                dismiss()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Are you sure you want to delete this goal?")
+        }
     }
 }
 
