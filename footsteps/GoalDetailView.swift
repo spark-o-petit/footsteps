@@ -10,11 +10,18 @@ import SwiftData
 
 struct GoalDetailView: View {
     let goal: Goal
-
+    
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var showDeleteAlert = false
     @State private var isEditPresented = false
+    @State private var newMilestoneTitle = ""
+    @State private var isAddingMilestone = false
+    
+    func addFootstep() {
+        let newMilestone = Milestone(title: "New Milestone", goal: goal)
+        modelContext.insert(newMilestone)
+    }
     
     var body: some View {
         Form {
@@ -50,7 +57,44 @@ struct GoalDetailView: View {
                     Text(goal.dueDate, style: .date)
                 }
             }
-
+            
+            Section(header: Text("FOOTSTEPS")) {
+                ForEach(goal.milestones) { milestone in
+                    HStack {
+                        Image(systemName: "circle.hexagonpath")
+                        Text(milestone.title)
+                        Spacer()
+                        Text(milestone.createdAt, style: .date)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .swipeActions {
+                        Button(role: .destructive) {
+                            modelContext.delete(milestone)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
+                }
+                if isAddingMilestone {
+                    HStack {
+                        TextField("New Milestone", text: $newMilestoneTitle)
+                        Button("Step Forward") {
+                            let newMilestone = Milestone(title: newMilestoneTitle, goal: goal)
+                            modelContext.insert(newMilestone)
+                            newMilestoneTitle = ""
+                            isAddingMilestone = false
+                        }
+                    }
+                } else {
+                    Button {
+                        isAddingMilestone = true
+                    } label: {
+                        Label("Add Milestone", systemImage: "plus")
+                    }
+                }
+                
+            }
         }
         .navigationTitle("Goal Details")
         .toolbar {
@@ -83,12 +127,24 @@ struct GoalDetailView: View {
         }
     }
 }
+    
+    #Preview {
+        do {
+            let container = try ModelContainer(for: Goal.self, Milestone.self)
+            let context = container.mainContext
 
-#Preview {
-    GoalDetailView(goal: Goal(
-        title: "Preview Goal",
-        estimatedEfforts: 5,
-        category: .tech,
-        difficulty: .medium,
-        dueDate: .now
-    ))}
+            let previewGoal = Goal(
+                title: "Preview Goal",
+                estimatedEfforts: 5,
+                category: .tech,
+                difficulty: .medium,
+                dueDate: .now
+            )
+            context.insert(previewGoal)
+
+            return GoalDetailView(goal: previewGoal)
+                .modelContainer(container)
+        } catch {
+            return Text("Failed to load preview")
+        }
+    }

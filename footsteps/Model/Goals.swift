@@ -23,6 +23,7 @@ class Goal {
         self.difficulty = difficulty
         self.dueDate = dueDate
     }
+    @Relationship(inverse: \Milestone.goal) var milestones: [Milestone] = []
 }
 
 enum Category: String, CaseIterable, Codable {

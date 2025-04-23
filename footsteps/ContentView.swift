@@ -43,10 +43,10 @@ struct ContentView: View {
                             Text(goal.title)
                         }
                         HStack {
-                            Text("\(goal.difficulty.rawValue), \(daysRemaining(until: goal.dueDate)) days left, \(goal.estimatedEfforts) steps estimated")
+                            Text("\(goal.difficulty.rawValue), \(daysRemaining(until: goal.dueDate)) days left, \(goal.milestones.count) of \(goal.estimatedEfforts) steps (\(goal.milestones.count/goal.estimatedEfforts*100)%)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
-                        .font(.caption)
-                        .foregroundColor(.secondary)
                     }
                 }
             }
@@ -63,12 +63,10 @@ struct ContentView: View {
             .sheet(isPresented: $showAddGoalView) {
                 AddGoalView()
             }
+
         }
     }
 }
-    //#Preview {
-    //    ContentView()
-    //}
     
     struct PreviewContainerView: View {
         let container: ModelContainer
@@ -97,4 +95,4 @@ struct ContentView: View {
             return Text("Preview Error")
         }
     }
-
+    
